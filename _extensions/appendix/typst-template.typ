@@ -4,10 +4,6 @@
   running-head: none,
   authors: (),
   affiliations: none,
-  abstract: none,
-  keywords: none,
-  wordcount: none,
-  authornote: none,
   citation: none,
   date: none,
   branding: none,
@@ -29,8 +25,6 @@
   toc-indent: 1.5em,
   bibliography-title: "References",
   bibliography-style: "apa",
-  cols: 1,
-  col-gutter: 4.2%,
   doc,
 ) = {
 
@@ -40,8 +34,6 @@
   // Set link and cite colors
   show link: set text(fill: linkcolor)
   show cite: set text(fill: linkcolor)
-
-  let orcidSvg = ```<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24"> <path fill="#AECD54" d="M21.8,12c0,5.4-4.4,9.8-9.8,9.8S2.2,17.4,2.2,12S6.6,2.2,12,2.2S21.8,6.6,21.8,12z M8.2,5.8c-0.4,0-0.8,0.3-0.8,0.8s0.3,0.8,0.8,0.8S9,7,9,6.6S8.7,5.8,8.2,5.8z M10.5,15.4h1.2v-6c0,0-0.5,0,1.8,0s3.3,1.4,3.3,3s-1.5,3-3.3,3s-1.9,0-1.9,0H10.5v1.1H9V8.3H7.7v8.2h2.9c0,0-0.3,0,3,0s4.5-2.2,4.5-4.1s-1.2-4.1-4.3-4.1s-3.2,0-3.2,0L10.5,15.4z"/></svg>```.text
 
   // Allow custom title for bibliography section
   set bibliography(title: bibliography-title, style: bibliography-style)
@@ -58,24 +50,8 @@
         // Solo manuscripts don't have institutional id
         a.name
         if authors.len() > 1 {super(a.affiliation)}
-        if a.keys().contains("email") {[\*]}
-        if a.keys().contains("orcid") {
-            box(
-              height: 1em,
-              link(
-                a.orcid,
-                figure(
-                  image.decode(orcidSvg, height: 0.9em)
-                )
-              )
-            )
-          }
         }
         ]
-
-      if a.keys().contains("corresponding") {
-        authornote = [\*Send correspondence to: #a.name, #a.email.\ #authornote]
-      }
       author_strings.push(author_string)
     }
   }
@@ -92,18 +68,20 @@
           grid(
             columns: (1fr, 1fr),
             align(left)[#running-head],
-            align(right)[#counter(page).display()]
+            h(0cm)
           )
         }
     ),
-    footer-descent: 24pt,
+    footer-descent: 10%,
     footer: locate(
-        // Page 1 footer has author note
-        loc => if [#loc.page()] == [1] {
-          [#text(size: 0.85em)[#authornote]]
-        } else {
-          []
-        }
+    loc => if [#loc.page()] != [1] {
+      grid(
+        columns: (1fr, 1fr, 1fr),
+        h(0cm),
+        align(center)[#counter(page).display()],
+        h(0cm)
+      )
+    }
     )
   )
 
@@ -136,19 +114,19 @@
   
   // Level 1 heading
   show heading.where(level: 1): it => block(width: 100%, below: 1em, above: 1.25em)[
-    #set text(size: fontsize*1.1, weight: "bold")
+    #set text(size: 1.25em, weight: "bold")
     #it
   ]
   
   // Level 2 heading
   show heading.where(level: 2): it => block(width: 100%, below: 1em, above: 1.25em)[
-    #set text(size: fontsize*1.05)
+    #set text(size: 1.1em, weight: "bold")
     #it
   ]
   
   // Level 3 heading
   show heading.where(level: 3): it => block(width: 100%, below: 0.8em, above: 1.2em)[
-    #set text(size: fontsize, style: "italic")
+    #set text(size: 1em, weight: "bold")
     #it
   ]
   
@@ -167,7 +145,7 @@
   let titleblock(
     body,
     width: 100%,
-    size: 1.5em,
+    size: 2em,
     weight: "bold",
     above: 1em,
     below: 2em
@@ -199,8 +177,6 @@
   }
 
 
-
-
   if affiliations != none {
     titleblock(
       weight: "regular", size: 1.1em, below: 2em,
@@ -213,21 +189,6 @@
     )
   }
 
-  // Abstract and keywords block
-  if abstract != none {
-  block(inset: (top: 2em, bottom: 0em, left: 2.4em, right: 2.4em))[
-    #set text(size: 0.92em)
-    #if abstract != none {
-      abstract
-    }
-    #if keywords != none {
-      [#v(0.4em)#text(style: "italic")[Keywords:] #keywords]
-    }
-    #if wordcount != none {
-      [\ #text(style: "italic")[Words:] #wordcount]
-    }
-  ]
-  }
 
   // Table of contents
   if toc {
@@ -262,31 +223,9 @@
   show figure.where(kind: table): set figure.caption(position: top)
   show figure.caption.where(kind: table): set align(left)
   
+  pagebreak(weak: true) // Place a pagebreak between the front-matter and the body.
 
   /* Content */
-
-  // Separate content a bit from front matter
-  
-  box(grid(
-    columns: (auto, 1fr, auto),
-    align: horizon + center,
-    column-gutter: 5pt,
-    h(0cm),
-    line(length: 100%, stroke: 2pt),
-    h(0cm),
- ))
- 
-  v(1em)  // Add a horizontal line
-  
-  // Show document content with cols if specified
-  if cols == 1 {
-    doc
-  } else {
-    columns(
-      cols,
-      gutter: col-gutter,
-      doc
-    )
-  }
+  doc
 
 }

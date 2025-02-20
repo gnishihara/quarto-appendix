@@ -1,4 +1,4 @@
-#show: doc => preprint(
+#show: doc => appendix(
 $if(title)$
   title: [$title$],
 $endif$
@@ -13,11 +13,7 @@ $if(by-author)$
   $for(by-author)$
       ( 
         name: [$it.name.literal$],
-        affiliation: [$for(it.affiliations)$$it.id$$sep$, $endfor$],
-        $if(it.attributes.corresponding)$corresponding: $it.attributes.corresponding$,$endif$
-        $if(it.attributes.equal-contributor)$equal-contributor: $it.attributes.equal-contributor$,$endif$
-        $if(it.orcid)$orcid: "https://orcid.org/$it.orcid$",$endif$
-        $if(it.email)$email: [$it.email$]$endif$
+        affiliation: [$for(it.affiliations)$$it.id$$sep$, $endfor$]
       ),
   $endfor$
   ),
@@ -64,23 +60,12 @@ $if(citation)$
     url: "$citation.url$"
   ),
 $endif$
-$if(authornote)$
-  authornote: [$authornote$],
-$endif$
+
 $if(lang)$
   lang: "$lang$",
 $endif$
 $if(region)$
   region: "$region$",
-$endif$
-$if(abstract)$
-  abstract: [$abstract$],
-$endif$
-$if(keywords)$
-  keywords: [$for(keywords)$$it$$sep$, $endfor$],
-$endif$
-$if(wordcount)$
-  wordcount: [$wordcount$],
 $endif$
 $if(margin)$
   margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
@@ -108,12 +93,6 @@ $if(toc-title)$
 $endif$
 $if(toc-indent)$
   toc-indent: "$toc-indent$",
-$endif$
-$if(cols)$
-  cols: $cols$,
-$endif$
-$if(col-gutter)$
-  col-gutter: $col-gutter$,
 $endif$
 $if(bibliography-style)$
   bibliography-style: [$bibliography-style$],

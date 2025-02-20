@@ -1,6 +1,6 @@
 # Appendix Format
 
-quarto-appendix is a Quarto extension to rended Quarto source documents to PDF using Typst.
+`quarto-appendix` is a Quarto extension to rended Quarto source documents to PDF using Typst.
 
 
 ## Install

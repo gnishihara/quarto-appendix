@@ -36,6 +36,8 @@ format:
       top: 4cm
       bottom: 2cm
       y: 3cm
+fig-width: 8
+fig-height: 5
 bibliography: references.bib
 execute:
   echo: false
@@ -43,11 +45,68 @@ execute:
   warning: false
 ---
 
-## Introduction
+# Introduction
 
-*TODO* Create an example file that demonstrates the formatting and features of your format.
+{{< lipsum 1 >}}
 
-## More Information
+## Example figure
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+library(ggtext)
+library(magick)
+library(patchwork)
+library(showtext)
+library(tinytable)
+```
+
+```{r}
+font_add_google(family = "notosans", "Noto Sans")
+theme_pubr(base_family = "notosans", base_size = 10) |> theme_set()
+theme_replace(
+  panel.background = element_rect(fill = "white", color = "black", linewidth = 1),
+  axis.line.x = element_blank(),
+  axis.line.y = element_blank(),
+  axis.title.x = element_markdown(family = "notosans", lineheight = 1.5, margin = unit(c(0.5,0,0,0), "lines")),
+  axis.title.y = element_markdown(family = "notosans", angle = 90, linewidth = 1.5, margin = unit(c(0,0.5,0,0), "lines")),
+  legend.background = element_blank(),
+  legend.title = element_markdown(family = "notosans"),
+  legend.text = element_markdown(family = "notosans", size = 1)
+) 
+showtext_auto()
+```
+
+```{r}
+#| label: fig-figure
+#| fig-cap: A histogram of 100 values sampled from a standard normal distribution.
+
+data = tibble(Values = rnorm(100))
+ggplot(data) + 
+  geom_histogram(aes(x = Values))
+```
+
+### Example table
+
+```{r}
+#| label: tbl-table
+#| tbl-cap: A sample of the  Iris data set.
+
+iris |> 
+  group_by(Species) |> 
+  slice_sample(n = 3) |>
+  select(Species, matches("Petal")) |> 
+  mutate(Species= str_glue("Iris {Species}")) |> 
+  rename_with(~c("Species", "Petal length (cm)", "Petal width (cm)")) |> 
+  tt() |> 
+  style_tt(i = 1:15, j = 2:3, align = "r") |> 
+  style_tt(i = 1:15, j = 1, italic = TRUE)
+
+```
+
+
+
+# More Information
 
 You can learn more about creating custom Typst templates here: 
 
@@ -67,4 +126,3 @@ Some references to read.
 * @nardelli_primary_2024
 * @smith_state_2023
 * @duarte_carbon_2025
-
