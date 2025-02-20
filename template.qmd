@@ -1,0 +1,70 @@
+---
+title: "Appendix 1 Title"
+subtitle: "Subtitle"
+running-head: "Appendix 1"
+author:
+  - name: Gregory N. Nishihara
+    affiliation:
+      - ref: 1
+      - ref: 2
+  - name: Yukio Inoue
+    affiliation:
+      - ref: 3
+affiliations:
+  - id: 1
+    name: Nagasaki University
+    department: Organization for Marine Science and Technology
+    region: Nagasaki
+    country: Japan
+    postal-code: 852-8521
+  - id: 2
+    name: Nagasaki University
+    department: Institute for East China Sea Research
+    region: Nagasaki
+    country: Japan
+    postal-code: 851-2213
+  - id: 3
+    name: Nagasaki University
+    department: Graduate School of Fisheries and Environmenal Science
+    region: Nagasaki
+    country: Japan
+    postal-code: 852-8521
+format: 
+  appendix-typst:
+    figprefix: A1
+    margin:
+      top: 4cm
+      bottom: 2cm
+      y: 3cm
+bibliography: references.bib
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+## Introduction
+
+*TODO* Create an example file that demonstrates the formatting and features of your format.
+
+## More Information
+
+You can learn more about creating custom Typst templates here: 
+
+<https://quarto.org/docs/prerelease/1.4/typst.html#custom-formats>
+
+Some references to read.
+
+* @fujita_seaweed_2023
+* @hurd_forensic_2022
+* @pessarrodona_carbon_2023
+* @rose_methods_2023
+* @ross_potential_2023
+* @zhang_atmospheric_2023
+* @hurd_airsea_2024
+* @kim_harnessing_2024
+* @moreda_role_2024
+* @nardelli_primary_2024
+* @smith_state_2023
+* @duarte_carbon_2025
+
