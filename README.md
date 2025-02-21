@@ -8,7 +8,7 @@
 Add template to an existing project:
 
 ```bash
-quarto add gnishihara/quarto-appendix`
+quarto add gnishihara/quarto-appendix
 ```
 
 Start a new Quarto project that uses `quarto-appendix`:
