@@ -15,7 +15,7 @@
   paper: "a4",
   lang: "en",
   region: "US",
-  font: ("Times", "Times New Roman", "Arial"),
+  font: ("Times New Roman", "Arial"),
   fontsize: 11pt,
   section-numbering: none,
   figprefix: none,
@@ -62,27 +62,34 @@
     margin: margin,
     numbering: "1",
     header-ascent: 30%,
-    header: locate(
-        loc => if [#loc.page()] != [1] {
-          // Page >1 header has running head and page number
+    header: context {
+      let pageN = counter(page).at(here()).first()
+      if (pageN != 1) {
+        return {
           grid(
             columns: (1fr, 1fr),
             align(left)[#running-head],
             h(0cm)
           )
         }
-    ),
+      } 
+      return
+    },
     footer-descent: 10%,
-    footer: locate(
-    loc => if [#loc.page()] != [1] {
-      grid(
-        columns: (1fr, 1fr, 1fr),
-        h(0cm),
-        align(center)[#counter(page).display()],
-        h(0cm)
-      )
+    footer: context {
+      let pageN = counter(page).at(here()).first()
+      if (pageN != 1) {
+        return {
+          grid(
+            columns: (1fr, auto, 1fr),
+            h(0cm),
+            align(center, text(0.95em, str(pageN))),
+            h(0cm)
+          )
+        }
+      }
+      return
     }
-    )
   )
 
   // Paragraph settings
